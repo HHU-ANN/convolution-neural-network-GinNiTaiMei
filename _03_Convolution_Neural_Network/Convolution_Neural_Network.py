@@ -83,10 +83,8 @@ class NeuralNetwork(nn.Module):
         return out
 
 
-'''
 def ResNet18():
     return NeuralNetwork(BasicBlock, [2, 2, 2, 2])
-'''
 
 
 def read_data():
@@ -114,10 +112,12 @@ def read_data():
 
 
 def main():
-    # model = ResNet18().to('cuda')
-    # model = torch.nn.DataParallel(model)
-    model = NeuralNetwork(BasicBlock, [2, 2, 2, 2])  # 若有参数则传入参数
+    model = ResNet18().to('cuda')
+    model = torch.nn.DataParallel(model)
+    cudnn.benchmark = True
+    # model = NeuralNetwork(BasicBlock, [2, 2, 2, 2])  # 若有参数则传入参数
     current_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(current_dir)
     model.load_state_dict(torch.load(parent_dir + '/pth/model.pth'))
     return model
+
