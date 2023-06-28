@@ -114,7 +114,7 @@ def read_data():
 def main():
     model = ResNet18().to('cuda')
     model = torch.nn.DataParallel(model)
-    cudnn.benchmark = True
+    # cudnn.benchmark = True
     # model = NeuralNetwork(BasicBlock, [2, 2, 2, 2])  # 若有参数则传入参数
     current_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(current_dir)
