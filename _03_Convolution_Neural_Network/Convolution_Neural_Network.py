@@ -50,9 +50,9 @@ class BasicBlock(nn.Module):
         return out
 
 
-class NeuralNetwork(nn.Module):
+class ResNet(nn.Module):
     def __init__(self, block, num_blocks, num_classes=10):
-        super(NeuralNetwork, self).__init__()
+        super(ResNet, self).__init__()
         self.in_planes = 64
 
         self.conv1 = conv3x3(3, 64)
@@ -84,7 +84,7 @@ class NeuralNetwork(nn.Module):
 
 
 def ResNet18():
-    return NeuralNetwork(BasicBlock, [2, 2, 2, 2])
+    return ResNet(BasicBlock, [2, 2, 2, 2])
 
 
 def read_data():
@@ -115,6 +115,6 @@ def main():
     model = ResNet18().to('cpu')  # 若有参数则传入参数
     current_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(current_dir)
-    model.load_state_dict(torch.load(parent_dir + '/pth/model.pth'))
+    model.load_state_dict(torch.load(parent_dir + '/pth/model.pth', map_location='cpu'))
     return model
 
