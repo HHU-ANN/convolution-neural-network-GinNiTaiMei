@@ -53,15 +53,15 @@ class BasicBlock(nn.Module):
 class ResNet(nn.Module):
     def __init__(self, block, num_blocks, num_classes=10):
         super(ResNet, self).__init__()
-        self.in_planes = 64
+        self.in_planes = 16
 
-        self.conv1 = conv3x3(3, 64)
-        self.bn1 = nn.BatchNorm2d(64)
-        self.layer1 = self._make_layer(block, 64, num_blocks[0], stride=1)
-        self.layer2 = self._make_layer(block, 128, num_blocks[1], stride=2)
-        self.layer3 = self._make_layer(block, 256, num_blocks[2], stride=2)
-        self.layer4 = self._make_layer(block, 512, num_blocks[3], stride=2)
-        self.linear = nn.Linear(512 * block.expansion, num_classes)
+        self.conv1 = conv3x3(3, 16)
+        self.bn1 = nn.BatchNorm2d(16)
+        self.layer1 = self._make_layer(block, 16, num_blocks[0], stride=1)
+        self.layer2 = self._make_layer(block, 32, num_blocks[1], stride=2)
+        self.layer3 = self._make_layer(block, 64, num_blocks[2], stride=2)
+        self.layer4 = self._make_layer(block, 128, num_blocks[3], stride=2)
+        self.linear = nn.Linear(128 * block.expansion, num_classes)
 
     def _make_layer(self, block, planes, num_blocks, stride):
         strides = [stride] + [1] * (num_blocks - 1)
@@ -113,8 +113,8 @@ def read_data():
 
 
 def main():
-    model = ResNet(BasicBlock, [2, 2, 2, 2])
-    # model = ResNet18().to('cpu')  # 若有参数则传入参数
+    # model = ResNet(BasicBlock, [2, 2, 2, 2])
+    model = ResNet18().to('cpu')  # 若有参数则传入参数
     current_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(current_dir)
     model.load_state_dict(torch.load(parent_dir + '/pth/model.pth', map_location=torch.device('cpu')))
