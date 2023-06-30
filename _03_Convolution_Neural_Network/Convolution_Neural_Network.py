@@ -113,8 +113,8 @@ def read_data():
 
 
 def main():
-    # model = ResNet(BasicBlock, [2, 2, 2, 2])
-    model = ResNet18().to('cpu')  # 若有参数则传入参数
+    model = ResNet(BasicBlock, [2, 2, 2, 2])
+    # model = ResNet18().to('cpu')  # 若有参数则传入参数
     current_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(current_dir)
     model.load_state_dict(torch.load(parent_dir + '/pth/model.pth', map_location=torch.device('cpu')))
